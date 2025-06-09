@@ -3,23 +3,21 @@
 const spider = document.querySelector('.spider');
 const wall = document.querySelector('.wall');
 
-wall.addEventListener('click', (e) => {
-  const wallRect = wall.getBoundingClientRect();
-  const spiderWidth = spider.offsetWidth;
-  const spiderHeight = spider.offsetHeight;
+document.addEventListener('click', (e) => {
+  // write code here
+  if (!wall.contains(e.target)) {
+    return;
+  }
 
-  const clickX = e.clientX - wallRect.left;
-  const clickY = e.clientY - wallRect.top;
+  const spiderWidth = parseFloat(window.getComputedStyle(spider).width);
+  const spiderHeight = parseFloat(window.getComputedStyle(spider).height);
+  const clickX = e.offsetX;
+  const clickY = e.offsetY;
+  let left = clickX - spiderWidth / 2;
+  let topp = clickY - spiderHeight / 2;
 
-  let x = clickX - spiderWidth / 2;
-  let y = clickY - spiderHeight / 2;
-
-  const maxLeft = wall.clientWidth - spiderWidth;
-  const maxTop = wall.clientHeight - spiderHeight;
-
-  x = Math.max(0, Math.min(x, maxLeft));
-  y = Math.max(0, Math.min(y, maxTop));
-
-  spider.style.left = `${x}px`;
-  spider.style.top = `${y}px`;
+  left = Math.max(0, Math.min(left, wall.clientWidth - spiderWidth));
+  topp = Math.max(0, Math.min(topp, wall.clientHeight - spiderHeight));
+  spider.style.left = `${left}px`;
+  spider.style.top = `${topp}px`;
 });
